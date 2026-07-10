@@ -17,3 +17,11 @@ async def home(request: Request):
         request=request,
         name="index.html"
     )
+
+
+@app.get("/nuova-offerta", response_class=HTMLResponse)
+async def nuova_offerta(request: Request):
+    return templates.TemplateResponse(
+        request=request,
+        name="nuova_offerta.html"
+    )
