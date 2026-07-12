@@ -11,11 +11,11 @@ CHANNEL_ID = os.getenv("TELEGRAM_CHANNEL_ID")
 async def invia_offerta(
     testo,
     link_amazon,
-    link_youtube=None
+    link_youtube=None,
+    foto=None
 ):
 
     bot = Bot(token=BOT_TOKEN)
-
 
     pulsanti = [
         [
@@ -25,7 +25,6 @@ async def invia_offerta(
             )
         ]
     ]
-
 
     if link_youtube:
         pulsanti.append(
@@ -37,32 +36,41 @@ async def invia_offerta(
             ]
         )
 
-
     pulsanti.append(
         [
             InlineKeyboardButton(
                 "📲 Condividi offerta",
-                url="https://wa.me/?text=Guarda questa offerta!"
+                url=f"https://wa.me/?text={link_amazon}"
             )
         ]
     )
-
 
     pulsanti.append(
         [
             InlineKeyboardButton(
                 "📢 Invita al canale",
-                url="https://wa.me/?text=Iscriviti al nostro canale Telegram offerte"
+                url="https://wa.me/?text=Ti consiglio questo canale Telegram di offerte Amazon: https://t.me/tuttooffert"
             )
         ]
     )
 
-
     tastiera = InlineKeyboardMarkup(pulsanti)
 
+    if foto:
 
-    await bot.send_message(
-        chat_id=CHANNEL_ID,
-        text=testo,
-        reply_markup=tastiera
-    )
+        with open(foto, "rb") as immagine:
+
+            await bot.send_photo(
+                chat_id=CHANNEL_ID,
+                photo=immagine,
+                caption=testo,
+                reply_markup=tastiera
+            )
+
+    else:
+
+        await bot.send_message(
+            chat_id=CHANNEL_ID,
+            text=testo,
+            reply_markup=tastiera
+        )
