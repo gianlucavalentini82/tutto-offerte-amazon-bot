@@ -1,4 +1,5 @@
 import os
+import urllib.parse
 
 from telegram import Bot
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
@@ -12,10 +13,17 @@ async def invia_offerta(
     testo,
     link_amazon,
     link_youtube=None,
-    foto=None
+    foto=None,
+    testo_condivisione=None
 ):
 
     bot = Bot(token=BOT_TOKEN)
+
+    if testo_condivisione:
+        testo_whatsapp = urllib.parse.quote(testo_condivisione)
+    else:
+        testo_whatsapp = urllib.parse.quote(link_amazon)
+
 
     pulsanti = [
         [
@@ -25,6 +33,7 @@ async def invia_offerta(
             )
         ]
     ]
+
 
     if link_youtube:
         pulsanti.append(
@@ -36,14 +45,16 @@ async def invia_offerta(
             ]
         )
 
+
     pulsanti.append(
         [
             InlineKeyboardButton(
                 "📲 Condividi offerta",
-                url=f"https://wa.me/?text={link_amazon}"
+                url=f"https://wa.me/?text={testo_whatsapp}"
             )
         ]
     )
+
 
     pulsanti.append(
         [
@@ -54,7 +65,9 @@ async def invia_offerta(
         ]
     )
 
+
     tastiera = InlineKeyboardMarkup(pulsanti)
+
 
     if foto:
 

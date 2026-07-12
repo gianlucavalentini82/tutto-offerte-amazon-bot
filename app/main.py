@@ -78,12 +78,14 @@ async def pubblica_offerta(
     risparmio = prezzo_vecchio_num - prezzo_offerta_num
     percentuale = (risparmio / prezzo_vecchio_num) * 100
 
+    prezzo_offerta_formattato = formato_euro(prezzo_offerta_num)
+
     messaggio = f"""
 🔥 {prodotto}
 
 💰 Prezzo precedente: {formato_euro(prezzo_vecchio_num)} €
 
-🔥 Prezzo offerta: {formato_euro(prezzo_offerta_num)} €
+🔥 Prezzo offerta: {prezzo_offerta_formattato} €
 
 🏷️ -{percentuale:.0f}% • Risparmi {formato_euro(risparmio)} €
 """
@@ -100,11 +102,30 @@ async def pubblica_offerta(
 🎥 Guarda la recensione YouTube
 """
 
+
+    testo_condivisione = f"""
+🔥 Guarda questa offerta Amazon!
+
+📦 {prodotto}
+
+💰 Prezzo: {prezzo_offerta_formattato} €
+
+🏷️ Sconto: -{percentuale:.0f}%
+
+🛒 Acquista qui:
+{link_amazon}
+
+📢 Altre offerte:
+https://t.me/tuttooffert
+"""
+
+
     await invia_offerta(
         testo=messaggio,
         link_amazon=link_amazon,
         link_youtube=link_youtube,
-        foto=percorso_foto
+        foto=percorso_foto,
+        testo_condivisione=testo_condivisione
     )
 
     return {
