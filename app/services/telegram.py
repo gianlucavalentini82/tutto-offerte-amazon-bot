@@ -59,7 +59,7 @@ async def invia_offerta(
     pulsanti.append(
         [
             InlineKeyboardButton(
-                "📢 Invita al canale",
+                "📢 Invita un amico al canale",
                 url="https://wa.me/?text=Ti consiglio questo canale Telegram di offerte Amazon: https://t.me/tuttooffert"
             )
         ]
