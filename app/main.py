@@ -29,6 +29,10 @@ def prezzo_to_float(prezzo: str) -> float:
     return float(prezzo)
 
 
+def formato_euro(valore: float) -> str:
+    return f"{valore:.2f}".replace(".", ",")
+
+
 @app.get("/", response_class=HTMLResponse)
 async def home(request: Request):
     return templates.TemplateResponse(
@@ -77,11 +81,11 @@ async def pubblica_offerta(
     messaggio = f"""
 🔥 {prodotto}
 
-💰 Prezzo precedente: {prezzo_vecchio_num:.2f} €
+💰 Prezzo precedente: {formato_euro(prezzo_vecchio_num)} €
 
-🔥 Prezzo offerta: {prezzo_offerta_num:.2f} €
+🔥 Prezzo offerta: {formato_euro(prezzo_offerta_num)} €
 
-🏷️ -{percentuale:.0f}% • Risparmi {risparmio:.2f} €
+🏷️ -{percentuale:.0f}% • Risparmi {formato_euro(risparmio)} €
 """
 
     if consigliato:
